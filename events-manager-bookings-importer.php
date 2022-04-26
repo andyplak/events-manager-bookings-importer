@@ -31,13 +31,17 @@ add_action( 'admin_menu', 'embi_admin_menu', 70 );
 function embi_form() {
 	global $EM_Person;
 
-	$notices = [];
-	$errors  = [];
+	$notices  = [];
+	$errors   = [];
+	$event_id = $_REQUEST['event_id'] ? $_REQUEST['event_id'] : 1; // TO DO, need to link to this page with event ID set
 
-	// Process Form
+	// Process Form submission
 	if( isset( $_REQUEST['submit'] ) ) {
 
 		check_admin_referer( 'import-bookings-'.get_current_user_id(), 'embi' );
+
+		// Prevent EM Woo Commerce plugin throwing errors
+		remove_action('em_booking_add', 'Events_Manager_WooCommerce\Bookings::em_booking_add', 5, 3);
 
 		// check there are no errors
 		if($_FILES['csv']['error'] == 0) {
@@ -62,7 +66,6 @@ function embi_form() {
 
 					// The following is hard coded to a particular format CSV and ticket config.
 					// Customise for your own needs...
-					$event_id   = 1;
 					$first_name = trim( $booking_row[0] );
 					$last_name  = trim( $booking_row[1] );
 					$email      = trim( $booking_row[2] );
@@ -158,13 +161,14 @@ function embi_form() {
 						$EM_Booking->get_post();
 
 						$post_validation = $EM_Booking->validate();
-
+						do_action('em_booking_add', $EM_Event, $EM_Booking, $post_validation);
 						if( $post_validation ) {
 
 							//register the user - or not depending - according to the booking
 							$registration = em_booking_add_registration($EM_Booking);
 
 							$EM_Bookings = $EM_Event->get_bookings();
+
 							if( $registration && $EM_Bookings->add($EM_Booking) ){
 								#if( is_user_logged_in() && is_multisite() && !is_user_member_of_blog( $user->ID, get_current_blog_id()) ){
 								#	add_user_to_blog(get_current_blog_id(), $user->ID, get_option('default_role'));
@@ -219,6 +223,7 @@ function embi_form() {
 
 		<form method="post" enctype="multipart/form-data">
 			<?php wp_nonce_field( 'import-bookings-'.get_current_user_id(), 'embi' ); ?>
+			<?php wp_create_nonce('em_manual_booking_'.$event_id); ?>
 			<table class="form-table" role="presentation">
 				<tbody>
 					<tr>
