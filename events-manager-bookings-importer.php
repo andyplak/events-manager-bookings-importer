@@ -252,7 +252,13 @@ function embi_form() {
 	<?php
 }
 
+/**
+ * Override recipient for all booking emails
+ */
 function embi_wp_mail( $args ) {
-	$args = [];
+	$args['subject'] = 'EM BOOKINGS IMPORT - ' . $args['subject'];
+	$args['message'] = 'EM BOOKINGS IMPORT. THIS MESSAGE WOULD NORMALLY HAVE BEEN SENT TO: ' . $args['to'] . "\r\n" . $args['message'];
+	$args['html']    = '<strong><em>BOOKINGS IMPORT. THIS MESSAGE WOULD NORMALLY HAVE BEEN SENT TO: ' . $args['to'] . '</em></strong><br />'.$args['html'];
+	$args['to']      = 'info@andyplace.co.uk';
 	return $args;
 }
