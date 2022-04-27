@@ -191,7 +191,7 @@ function embi_form() {
 							}
 							global $em_temp_user_data; $em_temp_user_data = false; //delete registered user temp info (if exists)
 						}else{
-							$errors[] = $EM_Booking->get_errors() . ' ('.$email.')';
+							$errors[] = implode( ' ', $EM_Booking->get_errors() ) .' ('.$email.')';
 						}
 					}else{
 						$errors[] = get_option('dbem_booking_feedback_already_booked'). ' ('.$email.')';
