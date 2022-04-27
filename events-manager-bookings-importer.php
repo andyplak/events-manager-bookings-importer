@@ -168,7 +168,7 @@ function embi_form() {
 						$_REQUEST = $payload;
 						$EM_Booking->get_post();
 
-						$post_validation = $EM_Booking->validate();
+						$post_validation = $EM_Booking->validate( true );
 						do_action('em_booking_add', $EM_Event, $EM_Booking, $post_validation);
 						if( $post_validation ) {
 
