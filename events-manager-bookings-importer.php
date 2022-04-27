@@ -78,41 +78,46 @@ function embi_form() {
 					// Tickets
 
 					/*
-					CSV | Ticket | EM Ticket ID
-					====|========|=============
-					5   | Adult  | 1
-					6   | Kids   | 2
-					7   | Van    | 3
-					8   | Car    | ?
-					9   | Tent   | 4
-					10  | Dogs   | ?
+					CSV | Ticket | ID (dev) | ID (prod)
+					====|========|==========|==========
+					5   | Guest  | 6        | 17
+					6   | Crew   | 8        | 18
+					7   | Kids   | 2        | 5
+					8   | Van    | 3        | 7
+					9   | Car    | ?        |
+					10  | Tent   | 4        | 11
+					11  | Dogs   | ?        | 10
 					*/
 
 					// Configure your's to match live
 					$em_tickets = [];
 
 					if( $booking_row[5] > 0 ) {
-						$em_tickets[1]['spaces'] = $booking_row[5];
+						$em_tickets[6]['spaces'] = $booking_row[5];
 					}
 
 					if( $booking_row[6] > 0 ) {
-						$em_tickets[2]['spaces'] = $booking_row[6];
+						$em_tickets[8]['spaces'] = $booking_row[6];
 					}
 
 					if( $booking_row[7] > 0 ) {
-						$em_tickets[3]['spaces'] = $booking_row[7];
+						$em_tickets[2]['spaces'] = $booking_row[7];
 					}
 
 					if( $booking_row[8] > 0 ) {
-						#$em_tickets[4]['spaces'] = $booking_row[8];
+						$em_tickets[3]['spaces'] = $booking_row[8];
 					}
 
 					if( $booking_row[9] > 0 ) {
-						#$em_tickets[5]['spaces'] = $booking_row[9];
+						#$em_tickets[11]['spaces'] = $booking_row[9];
 					}
 
 					if( $booking_row[10] > 0 ) {
-						#$em_tickets[6]['spaces'] = $booking_row[10];
+						$em_tickets[4]['spaces'] = $booking_row[10];
+					}
+
+					if( $booking_row[11] > 0 ) {
+						#$em_tickets[10]['spaces'] = $booking_row[10];
 					}
 
 					$user = get_user_by('email', $email );
@@ -163,7 +168,7 @@ function embi_form() {
 						$_REQUEST = $payload;
 						$EM_Booking->get_post();
 
-						$post_validation = $EM_Booking->validate();
+						$post_validation = $EM_Booking->validate( true );
 						do_action('em_booking_add', $EM_Event, $EM_Booking, $post_validation);
 						if( $post_validation ) {
 
@@ -186,7 +191,7 @@ function embi_form() {
 							}
 							global $em_temp_user_data; $em_temp_user_data = false; //delete registered user temp info (if exists)
 						}else{
-							$errors[] = $EM_Booking->get_errors() . ' ('.$email.')';
+							$errors[] = implode( ' ', $EM_Booking->get_errors() ) .' ('.$email.')';
 						}
 					}else{
 						$errors[] = get_option('dbem_booking_feedback_already_booked'). ' ('.$email.')';
