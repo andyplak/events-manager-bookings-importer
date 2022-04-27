@@ -93,19 +93,19 @@ function embi_form() {
 					$em_tickets = [];
 
 					if( $booking_row[5] > 0 ) {
-						$em_tickets[6]['spaces'] = $booking_row[5];
+						$em_tickets[17]['spaces'] = $booking_row[5];
 					}
 
 					if( $booking_row[6] > 0 ) {
-						$em_tickets[8]['spaces'] = $booking_row[6];
+						$em_tickets[18]['spaces'] = $booking_row[6];
 					}
 
 					if( $booking_row[7] > 0 ) {
-						$em_tickets[2]['spaces'] = $booking_row[7];
+						$em_tickets[5]['spaces'] = $booking_row[7];
 					}
 
 					if( $booking_row[8] > 0 ) {
-						$em_tickets[3]['spaces'] = $booking_row[8];
+						$em_tickets[7]['spaces'] = $booking_row[8];
 					}
 
 					if( $booking_row[9] > 0 ) {
@@ -113,11 +113,11 @@ function embi_form() {
 					}
 
 					if( $booking_row[10] > 0 ) {
-						$em_tickets[4]['spaces'] = $booking_row[10];
+						$em_tickets[11]['spaces'] = $booking_row[10];
 					}
 
 					if( $booking_row[11] > 0 ) {
-						#$em_tickets[10]['spaces'] = $booking_row[10];
+						$em_tickets[10]['spaces'] = $booking_row[10];
 					}
 
 					$user = get_user_by('email', $email );
