@@ -33,7 +33,54 @@ function embi_form() {
 
 	$notices  = [];
 	$errors   = [];
-	$event_id = $_REQUEST['event_id'] ? $_REQUEST['event_id'] : 1; // TO DO, need to link to this page with event ID set
+
+	if( !isset( $_REQUEST['event_id'] ) || empty( $_REQUEST['event_id'] ) ) {
+
+		// Get all future events
+		$args = [
+			'scope' => 'future',
+			'limit' => 0 // Retrieve all events
+		];
+		$events = EM_Events::get($args);
+
+		?>
+		<div class="wrap">
+			<h1><?php _e('Import Bookings', 'embi' ) ?></h1>
+			<form>
+				<table class="form-table" role="presentation">
+					<tbody>
+						<tr>
+							<th>
+								<label for="event_id"><?php _e('Event') ?></label>
+							</th>
+							<td>
+								<select name="event_id">
+									<option value="">Choose event</option>
+								<?php foreach ($events as $event) : ?>
+									<option value="<?php echo $event->event_id ?>"><?php echo $event->event_name ?></option>
+								<?php endforeach; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td>
+								<input type="hidden" name="post_type" value="event" />
+								<input type="hidden" name="page" value="events-bookings-import" />
+								<input type="submit" class="button button-primary" value="<?php _e('Next step') ?>" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+			</form>
+		</div>
+		<?php
+		return;
+	}
+
+	$event_id = (int)$_REQUEST['event_id'];
 
 	// Process Form submission
 	if( isset( $_REQUEST['submit'] ) ) {
@@ -43,7 +90,7 @@ function embi_form() {
 		// Prevent EM Woo Commerce plugin throwing errors
 		remove_action('em_booking_add', 'Events_Manager_WooCommerce\Bookings::em_booking_add', 5, 3);
 
-		// Prevent booking and registration emails being sent
+		// Filter to allow us or other to prevent booking and registration emails being sent
 		add_filter( 'wp_mail', 'embi_wp_mail', 1);
 
 		// check there are no errors
