@@ -90,7 +90,7 @@ function embi_form() {
 		// Prevent EM Woo Commerce plugin throwing errors
 		remove_action('em_booking_add', 'Events_Manager_WooCommerce\Bookings::em_booking_add', 5, 3);
 
-		// Filter to allow us or other to prevent booking and registration emails being sent
+		// Prevent booking and registration emails being sent
 		add_filter( 'wp_mail', 'embi_wp_mail', 1);
 
 		// check there are no errors
