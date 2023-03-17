@@ -4,7 +4,7 @@
  * Plugin Name: Events Manager Bookings Importer
  * Plugin URI: https://github.com/andyplak/events-manager-bookings-importer
  * Description: Simple plugin to import mulitple bookings for an event via csv file.
- * Version: 0.1
+ * Version: 0.2
  * Author: Andy Place
  * Author URI: http://www.andyplace.co.uk/
  * License: GPLv2 or later
@@ -120,51 +120,50 @@ function embi_form() {
 					$last_name  = trim( $booking_row[1] );
 					$email      = trim( $booking_row[2] );
 					$org        = trim( $booking_row[4] );
-					$notes      = trim( $booking_row[12] );
+					$notes      = trim( $booking_row[13] );
 
 					// Tickets
 
 					/*
 					CSV | Ticket | ID (dev) | ID (prod)
 					====|========|==========|==========
-					5   | Guest  | 6        | 17
-					6   | Crew   | 8        | 18
-					7   | Kids   | 2        | 5
-					8   | Van    | 3        | 7
-					9   | Car    | ?        |
-					10  | Tent   | 4        | 11
-					11  | Dogs   | ?        | 10
+					5   | Crew   | 50        | 50
+					6   | Guest  | 52        | 52
+					7   | Kids   | 53        | 53
+					8   | Van    | 54        | 54
+					9   | Car    | 55        | 55
+					10  | Tent   | 56        | 56
+					11  | Dogs   | 57        | 57
 					*/
 
-					// Configure your's to match live
 					$em_tickets = [];
 
 					if( $booking_row[5] > 0 ) {
-						$em_tickets[6]['spaces'] = $booking_row[5];
+						$em_tickets[50]['spaces'] = $booking_row[5];
 					}
 
 					if( $booking_row[6] > 0 ) {
-						$em_tickets[8]['spaces'] = $booking_row[6];
+						$em_tickets[52]['spaces'] = $booking_row[6];
 					}
 
 					if( $booking_row[7] > 0 ) {
-						$em_tickets[2]['spaces'] = $booking_row[7];
+						$em_tickets[53]['spaces'] = $booking_row[7];
 					}
 
 					if( $booking_row[8] > 0 ) {
-						$em_tickets[3]['spaces'] = $booking_row[8];
+						$em_tickets[54]['spaces'] = $booking_row[8];
 					}
 
 					if( $booking_row[9] > 0 ) {
-						#$em_tickets[11]['spaces'] = $booking_row[9];
+						$em_tickets[55]['spaces'] = $booking_row[9];
 					}
 
 					if( $booking_row[10] > 0 ) {
-						$em_tickets[4]['spaces'] = $booking_row[10];
+						$em_tickets[56]['spaces'] = $booking_row[10];
 					}
 
 					if( $booking_row[11] > 0 ) {
-						#$em_tickets[10]['spaces'] = $booking_row[10];
+						$em_tickets[57]['spaces'] = $booking_row[11];
 					}
 
 					$user = get_user_by('email', $email );
@@ -175,8 +174,6 @@ function embi_form() {
 						'event_id'                => $event_id,
 						'_wpnonce'                => wp_create_nonce('booking_add'),
 						'booking_comment'         => $notes,
-						'lft_agreed'              => '1',
-						'cip_agreed'              => '1',
 						'data_privacy_consent'    => '1',
 						'manual_booking'          => wp_create_nonce('em_manual_booking_'.$event_id),
 						'gateway'                 => 'offline',
@@ -199,8 +196,6 @@ function embi_form() {
 						$payload['dbem_zip']     = 'BS1 1HT';
 						$payload['dbem_country'] = 'GB';
 					}
-
-					#_dump( $payload );
 
 
 					//ADD/EDIT Booking
