@@ -190,11 +190,6 @@ function embi_form() {
 						$payload['person_id']    = 0;
 						$payload['user_name']    = $first_name . ' ' . $last_name;
 						$payload['user_email']   = $email;
-						$payload['dbem_address'] = '29 Corn Street';
-						$payload['dbem_city']    = 'Bristol';
-						$payload['dbem_state']   = 'Bristol';
-						$payload['dbem_zip']     = 'BS1 1HT';
-						$payload['dbem_country'] = 'GB';
 					}
 
 
