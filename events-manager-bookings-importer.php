@@ -95,8 +95,8 @@ function embi_form() {
 
 		// check there are no errors
 		if($_FILES['csv']['error'] == 0) {
-			$name = $_FILES['csv']['name'];
-			$ext  = strtolower( end( explode( '.', $_FILES['csv']['name'] ) ) );
+			$name_parts = explode( '.', $_FILES['csv']['name'] );
+			$ext  = strtolower( end( $name_parts ) );
 			$type = $_FILES['csv']['type'];
 
 			// check the file is a csv
