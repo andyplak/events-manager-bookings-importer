@@ -138,32 +138,63 @@ function embi_form() {
 
 					$em_tickets = [];
 
-					if( $booking_row[5] > 0 ) {
-						$em_tickets[50]['spaces'] = $booking_row[5];
-					}
+					if( 6 == $event_id ) {
 
-					if( $booking_row[6] > 0 ) {
-						$em_tickets[52]['spaces'] = $booking_row[6];
-					}
+						if( $booking_row[5] > 0 ) {
+							$em_tickets[50]['spaces'] = $booking_row[5];
+						}
 
-					if( $booking_row[7] > 0 ) {
-						$em_tickets[53]['spaces'] = $booking_row[7];
-					}
+						if( $booking_row[6] > 0 ) {
+							$em_tickets[52]['spaces'] = $booking_row[6];
+						}
 
-					if( $booking_row[8] > 0 ) {
-						$em_tickets[54]['spaces'] = $booking_row[8];
-					}
+						if( $booking_row[7] > 0 ) {
+							$em_tickets[53]['spaces'] = $booking_row[7];
+						}
 
-					if( $booking_row[9] > 0 ) {
-						$em_tickets[55]['spaces'] = $booking_row[9];
-					}
+						if( $booking_row[8] > 0 ) {
+							$em_tickets[54]['spaces'] = $booking_row[8];
+						}
 
-					if( $booking_row[10] > 0 ) {
-						$em_tickets[56]['spaces'] = $booking_row[10];
-					}
+						if( $booking_row[9] > 0 ) {
+							$em_tickets[55]['spaces'] = $booking_row[9];
+						}
 
-					if( $booking_row[11] > 0 ) {
-						$em_tickets[57]['spaces'] = $booking_row[11];
+						if( $booking_row[10] > 0 ) {
+							$em_tickets[56]['spaces'] = $booking_row[10];
+						}
+
+						if( $booking_row[11] > 0 ) {
+							$em_tickets[57]['spaces'] = $booking_row[11];
+						}
+					}elseif( 9 == $event_id ) {
+						if( $booking_row[5] > 0 ) {
+							$em_tickets[66]['spaces'] = $booking_row[5];
+						}
+
+						if( $booking_row[6] > 0 ) {
+							$em_tickets[67]['spaces'] = $booking_row[6];
+						}
+
+						if( $booking_row[7] > 0 ) {
+							$em_tickets[68]['spaces'] = $booking_row[7];
+						}
+
+						if( $booking_row[8] > 0 ) {
+							$em_tickets[69]['spaces'] = $booking_row[8];
+						}
+
+						if( $booking_row[9] > 0 ) {
+							$em_tickets[70]['spaces'] = $booking_row[9];
+						}
+
+						if( $booking_row[10] > 0 ) {
+							$em_tickets[71]['spaces'] = $booking_row[10];
+						}
+
+						if( $booking_row[11] > 0 ) {
+							$em_tickets[72]['spaces'] = $booking_row[11];
+						}
 					}
 
 					$user = get_user_by('email', $email );
