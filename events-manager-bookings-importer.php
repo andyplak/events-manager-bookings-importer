@@ -195,6 +195,34 @@ function embi_form() {
 						if( $booking_row[11] > 0 ) {
 							$em_tickets[72]['spaces'] = $booking_row[11];
 						}
+					}elseif( 10 == $event_id ) {
+						if( $booking_row[5] > 0 ) {
+							$em_tickets[73]['spaces'] = $booking_row[5];
+						}
+
+						if( $booking_row[6] > 0 ) {
+							$em_tickets[74]['spaces'] = $booking_row[6];
+						}
+
+						if( $booking_row[7] > 0 ) {
+							$em_tickets[75]['spaces'] = $booking_row[7];
+						}
+
+						if( $booking_row[8] > 0 ) {
+							$em_tickets[76]['spaces'] = $booking_row[8];
+						}
+
+						if( $booking_row[9] > 0 ) {
+							$em_tickets[77]['spaces'] = $booking_row[9];
+						}
+
+						if( $booking_row[10] > 0 ) {
+							$em_tickets[78]['spaces'] = $booking_row[10];
+						}
+
+						if( $booking_row[11] > 0 ) {
+							$em_tickets[79]['spaces'] = $booking_row[11];
+						}
 					}
 
 					$user = get_user_by('email', $email );
