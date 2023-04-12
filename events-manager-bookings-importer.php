@@ -123,8 +123,9 @@ function embi_form() {
 					#$notes      = trim( $booking_row[13] );
 					$ticket_id  = trim( $booking_row[6] );
 
-					// Tickets
+					$booking_date = EM_DateTime::createFromFormat('d/m/Y H:i:s', $booking_row[2]);
 
+					// Tickets
 					$em_tickets = [];
 
 					if( $booking_row[7] > 0 ) {
@@ -187,6 +188,25 @@ function embi_form() {
 								#	add_user_to_blog(get_current_blog_id(), $user->ID, get_option('default_role'));
 								#}
 								$notices[] = $EM_Bookings->feedback_message . ' ('.$email.')';
+
+								// It's not possible to set the date before the insert.
+								// EM_Booking save() defaults to current date on insert
+								// So we modify the booking after it has been inserted
+								if( $booking_date ) {
+									$EM_Booking->date = $booking_date;
+									$EM_Booking->booking_date = gmdate('Y-m-d H:i:s', $booking_date->getTimestamp());
+
+									// Need to convince EM to let us update the booking date on update.
+									// Tricky, but possible via the two filters below
+									add_action( 'em_booking_save_pre', 'embi_booking_save_pre' );
+									add_action( 'em_object_get_types', 'embi_object_get_types' );
+
+									$EM_Booking->save(false);
+
+									remove_action( 'em_booking_save_pre', 'embi_booking_save_pre' );
+									remove_action( 'em_object_get_types', 'embi_object_get_types' );
+								}
+
 							}else{
 								if(!$registration){
 									$errors[] = implode( ' ', $EM_Booking->get_errors() ) .' ('.$email.')';
@@ -265,4 +285,15 @@ function embi_form() {
 function embi_wp_mail( $args ) {
 	$args = [];
 	return $args;
+}
+
+// Include booking data when attempting to update a booking
+function embi_booking_save_pre( $EM_Booking ) {
+	$EM_Booking->fields['booking_date'] = gmdate('Y-m-d H:i:s', $EM_Booking->date->getTimestamp());
+}
+
+// Specify booking_date format when attempting to update a booking
+function embi_object_get_types( $types ) {
+	$types[11] = '%s';
+	return $types;
 }
