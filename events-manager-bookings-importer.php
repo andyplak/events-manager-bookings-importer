@@ -289,7 +289,7 @@ function embi_wp_mail( $args ) {
 
 // Include booking data when attempting to update a booking
 function embi_booking_save_pre( $EM_Booking ) {
-	$EM_Booking->fields['booking_date'] = gmdate('Y-m-d H:i:s', $EM_Booking->date->getTimestamp());
+	$EM_Booking->fields['booking_date'] = array('name'=>'date','type'=>'%s');
 }
 
 // Specify booking_date format when attempting to update a booking
